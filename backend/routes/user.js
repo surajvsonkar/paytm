@@ -3,6 +3,7 @@ const z = require('zod')
 const { User } = require('../db')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = require('../config')
+const authMiddleware = require('../middlewares/auth')
 
 const userRouter = express.Router()
 
@@ -29,7 +30,7 @@ userRouter.post('/signup', async (req,res)=> {
     const userExists = await User.findOne({
         username: username
     })
-    console.log(userExists)
+    // console.log(userExists)
     if(userExists) {
         res.json({
             msg: "user already exists"
@@ -60,30 +61,30 @@ userRouter.post('/signup', async (req,res)=> {
 
 })
 
-userRouter.get('/signin', async(req,res)=> {
-    const result = userSchema.safeParse(req.body)
-    if(!result.success){
-        return res.status(400).json(result.error.errors)
-    }
+userRouter.get('/signin',authMiddleware,  async(req,res)=> {
+    // const result = userSchema.safeParse(req.body)
+    // if(!result.success){
+    //     return res.status(400).json(result.error.errors)
+    // }
 
-    const {username, password} = result.data
+    // const {username, password} = result.data
 
     
-        const validUser = await User.findOne({
-            username,
-            password
-        })
+    //     const validUser = await User.findOne({
+    //         username,
+    //         password
+    //     })
 
-        if(validUser){
-            res.status(200).json({
-                msg: "user Signedin Successfully"
-            })
-        } else {
+    //     if(validUser){
+    //         res.status(200).json({
+    //             msg: "user Signedin Successfully"
+    //         })
+    //     } else {
 
-            res.status(404).json({
-                msg: "wrong inputs"
-            })
-        }
+    //         res.status(404).json({
+    //             msg: "wrong inputs"
+    //         })
+    //     }
 })
 
 module.exports = userRouter
