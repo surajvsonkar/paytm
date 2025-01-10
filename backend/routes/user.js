@@ -28,9 +28,9 @@ userRouter.post('/signup', async (req,res)=> {
     const {username, password, firstName, lastName} = result.data
 
     const userExists = await User.findOne({
-        username: username
+        username: req.body.username
     })
-    // console.log(userExists)
+
     if(userExists) {
         res.json({
             msg: "user already exists"
@@ -38,7 +38,7 @@ userRouter.post('/signup', async (req,res)=> {
         return;
     } else {
         try {
-            await User.create({
+            const user = await User.create({
                 username,
                 password,
                 firstName,
@@ -46,7 +46,9 @@ userRouter.post('/signup', async (req,res)=> {
         
             })
     
-            const token = jwt.sign({username}, JWT_SECRET)
+            const token = jwt.sign({
+                userId: user._id
+            }, JWT_SECRET)
             res.json({
                 msg: "user is craeted successfully",
                 userID: token
@@ -61,7 +63,7 @@ userRouter.post('/signup', async (req,res)=> {
 
 })
 
-userRouter.get('/signin',authMiddleware,  async(req,res)=> {
+userRouter.get('/signin',authMiddleware, async(req,res)=> {
     // const result = userSchema.safeParse(req.body)
     // if(!result.success){
     //     return res.status(400).json(result.error.errors)
@@ -85,6 +87,39 @@ userRouter.get('/signin',authMiddleware,  async(req,res)=> {
     //             msg: "wrong inputs"
     //         })
     //     }
+
+    res.json({
+        msg:"successfully signed in"
+    })
+})
+
+userRouter.put('/', authMiddleware, async(req,res)=> {
+    
+
+    if(req.body.username){
+        return res.status(403).json({
+            msg: "we cannot update the username"
+        })
+    }
+    if(req.body.password) password = req.body.password
+    if(req.body.firstName) firstName = req.body.firstName
+    if(req.body.lastName) lastName = req.body.lastName
+
+    try {
+        const infoUpdated = await User.updateOne({
+            _id: req.userId
+        }, {
+            password, firstName, lastName
+        })
+        
+        if(infoUpdated){
+            res.status(200).json({
+                msg: "data updated successfully"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({error})
+    }
 })
 
 module.exports = userRouter

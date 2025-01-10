@@ -3,11 +3,11 @@ const app = express()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 
-const router = require('./routes')
+const mainRouter = require('./routes')
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/v1', router)
+app.use('/api/v1', mainRouter)
 
 
 app.listen(3000, ()=> {
