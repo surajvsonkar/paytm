@@ -148,13 +148,13 @@ userRouter.get('/bulk', authMiddleware, async (req, res) => {
 			$or: [
 				{
 					firstName: {
-						$regex: `^${filter}`,
+						$regex: filter,
 						$options: `i`,
 					},
 				},
 				{
 					lastName: {
-						$regex: `^${filter}`,
+						$regex: filter,
 						$options: `i`,
 					},
 				},
