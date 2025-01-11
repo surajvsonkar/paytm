@@ -1,12 +1,12 @@
 import React from 'react'
 
-const InputBox = ({label, placeholder}) => {
+const InputBox = ({label, placeholder, onchange}) => {
   return (
     <div>
         <div className='text-sm font-medium text-left py-2'>
             {label}
         </div>
-        <input placeholder={placeholder} className=' w-full px-2 py-1 border'></input>
+        <input onChange={onchange} placeholder={placeholder} className=' w-full px-2 py-1 border'></input>
     </div>
   )
 }
