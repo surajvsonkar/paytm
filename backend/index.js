@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const mainRouter = require('./routes')
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json()) 
 app.use('/api/v1', mainRouter)
 
 

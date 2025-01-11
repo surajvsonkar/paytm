@@ -16,7 +16,7 @@ const authMiddleware = (req,res,next)=> {
             next()
         }
     } catch (error) {
-        return res.status(403).json({error})
+        return res.status(403).json({msg: "invalid user"})
     }
     
 }
