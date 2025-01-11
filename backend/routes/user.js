@@ -67,6 +67,8 @@ userRouter.post('/signup', async (req, res) => {
 				msg: 'user is craeted successfully',
 				userID: token,
 			});
+
+			console.log("token: ", token)
 		} catch (error) {
 			res.json({
 				msg: error,
