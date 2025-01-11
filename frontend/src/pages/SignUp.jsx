@@ -19,7 +19,7 @@ const SignUp = () => {
                     <div className='pt-4'>
                         <Button label={"Sign Up"} />
                     </div>
-                    <BottomWarning/>
+                    <BottomWarning label={"Already have an account?"} buttonText={"Sign In"} to={"/signin"} />
                 </div>
             </div>
 		</div>
