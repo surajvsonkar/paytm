@@ -64,7 +64,7 @@ userRouter.post('/signup', async (req, res) => {
 				JWT_SECRET
 			);
 			res.json({
-				msg: 'user is craeted successfully',
+				msg: 'user is created successfully',
 				userID: token,
 			});
 
@@ -146,7 +146,7 @@ userRouter.put('/', authMiddleware, async (req, res) => {
 	}
 });
 
-userRouter.get('/bulk', authMiddleware, async (req, res) => {
+userRouter.get('/bulk', async (req, res) => {
 	const filter = req.query.filter;
 	try {
 		//Use ^${filter} in the $regex to dynamically match firstName values that start with the filter value.
