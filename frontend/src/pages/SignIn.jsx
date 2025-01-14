@@ -21,7 +21,7 @@ const SignIn = () => {
 					<InputBox onchange={(e)=> {
 						setUsername(e.target.value)
 					}} placeholder={'suraj@gmail.com'} label={'Email'} />
-					<InputBox onchange={(e)=> {
+					<InputBox type='password' onchange={(e)=> {
 						setPassword(e.target.value)
 					}} placeholder={'123456'} label={'Password'} />
 					<div className="pt-4">
